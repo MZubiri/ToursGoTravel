@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { getStoredTours, saveStoredTours } from '@/lib/tours-store';
+import { fetchServerTours, saveTourToServer, deleteTourFromServer } from '@/lib/tours-store';
 import { Plus, Edit3, Trash2, Globe, Check, X, Eye } from 'lucide-react';
 import ImageUploader from '@/components/admin/ImageUploader';
 
@@ -9,9 +9,15 @@ export default function AdminToursPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTourId, setEditingTourId] = useState(null);
   const [activeLangTab, setActiveLangTab] = useState('es');
+  const [saving, setSaving] = useState(false);
+
+  const loadTours = async () => {
+    const tours = await fetchServerTours();
+    setToursList(tours);
+  };
 
   useEffect(() => {
-    setToursList(getStoredTours());
+    loadTours();
   }, []);
 
   // Initial empty form state matching all public tour fields
@@ -82,7 +88,7 @@ export default function AdminToursPage() {
         de: Array.isArray(tour.includes?.de) ? tour.includes.de.join('\n') : tour.includes?.de || ''
       },
       excludes: {
-        es: Array.isArray(tour.excludes?.es) ? tour.excludes.es.join('\n') : tour.excludes.es || '',
+        es: Array.isArray(tour.excludes?.es) ? tour.excludes.es.join('\n') : tour.excludes?.es || '',
         en: Array.isArray(tour.excludes?.en) ? tour.excludes.en.join('\n') : tour.excludes?.en || '',
         fr: Array.isArray(tour.excludes?.fr) ? tour.excludes.fr.join('\n') : tour.excludes?.fr || '',
         pt: Array.isArray(tour.excludes?.pt) ? tour.excludes.pt.join('\n') : tour.excludes?.pt || '',
@@ -93,8 +99,9 @@ export default function AdminToursPage() {
     setIsModalOpen(true);
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+    setSaving(true);
 
     const formatList = (str) => typeof str === 'string' ? str.split('\n').map(s => s.trim()).filter(Boolean) : str;
 
@@ -129,35 +136,23 @@ export default function AdminToursPage() {
       }
     };
 
-    let updatedList;
-    if (editingTourId) {
-      updatedList = toursList.map(t => t.id === editingTourId ? processedTour : t);
-    } else {
-      updatedList = [processedTour, ...toursList];
-    }
-
-    setToursList(updatedList);
-    saveStoredTours(updatedList);
+    await saveTourToServer(processedTour);
+    await loadTours();
+    setSaving(false);
     setIsModalOpen(false);
   };
 
-  const handleDelete = (id) => {
-    if (confirm('¿Estás seguro de eliminar este tour?')) {
-      const updatedList = toursList.filter(t => t.id !== id);
-      setToursList(updatedList);
-      saveStoredTours(updatedList);
+  const handleDelete = async (id) => {
+    if (confirm('¿Estás seguro de eliminar este tour de la base de datos MySQL?')) {
+      await deleteTourFromServer(id);
+      await loadTours();
     }
   };
 
-  const toggleStatus = (id) => {
-    const updatedList = toursList.map(t => {
-      if (t.id === id) {
-        return { ...t, status: t.status === 'published' ? 'draft' : 'published' };
-      }
-      return t;
-    });
-    setToursList(updatedList);
-    saveStoredTours(updatedList);
+  const toggleStatus = async (tour) => {
+    const updated = { ...tour, status: tour.status === 'published' ? 'draft' : 'published' };
+    await saveTourToServer(updated);
+    await loadTours();
   };
 
   return (
@@ -166,10 +161,10 @@ export default function AdminToursPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '30px', fontWeight: '800', color: '#0F172A', marginBottom: '4px' }}>
-            Gestión de Tours (CRUD Persistente)
+            Gestión de Tours (Base de Datos MySQL)
           </h1>
           <p style={{ fontSize: '15px', color: '#64748B' }}>
-            Crea, edita y administra los campos públicos y traducciones en los 5 idiomas (Sincronizado en tiempo real)
+            Persistencia garantizada en la nube / VPS. Sincronizado en tiempo real para todos los dispositivos y usuarios.
           </p>
         </div>
 
@@ -250,7 +245,7 @@ export default function AdminToursPage() {
                   </td>
                   <td style={{ padding: '16px 12px' }}>
                     <button
-                      onClick={() => toggleStatus(t.id)}
+                      onClick={() => toggleStatus(t)}
                       style={{
                         backgroundColor: t.status === 'published' ? '#F0FDF4' : '#FEF2F2',
                         color: t.status === 'published' ? '#1B5E3B' : '#EF4444',
@@ -300,14 +295,14 @@ export default function AdminToursPage() {
                 <h2 style={{ fontSize: '22px', fontWeight: '800', color: '#0F172A' }}>
                   {editingTourId ? 'Editar Tour' : 'Crear Nuevo Tour'}
                 </h2>
-                <span style={{ fontSize: '13px', color: '#64748B' }}>Completa todos los datos públicos, imágenes y traducciones por idioma</span>
+                <span style={{ fontSize: '13px', color: '#64748B' }}>Guardando en MySQL — Sincronizado en todos los dispositivos</span>
               </div>
               <button onClick={() => setIsModalOpen(false)} style={{ color: '#64748B', padding: '4px' }}><X size={24} /></button>
             </div>
 
             <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               
-              {/* Image Uploader Component (Drag & Drop + Local File Upload + Previews) */}
+              {/* Image Uploader Component */}
               <ImageUploader
                 images={formData.images}
                 onChange={(newImages) => setFormData({ ...formData, images: newImages })}
@@ -525,9 +520,10 @@ export default function AdminToursPage() {
                 </button>
                 <button
                   type="submit"
-                  style={{ padding: '12px 28px', borderRadius: '12px', backgroundColor: '#1B5E3B', color: '#FFFFFF', fontWeight: '700', boxShadow: '0 4px 14px rgba(27,94,59,0.3)' }}
+                  disabled={saving}
+                  style={{ padding: '12px 28px', borderRadius: '12px', backgroundColor: '#1B5E3B', color: '#FFFFFF', fontWeight: '700', boxShadow: '0 4px 14px rgba(27,94,59,0.3)', opacity: saving ? 0.7 : 1 }}
                 >
-                  {editingTourId ? 'Guardar Cambios' : 'Crear Tour'}
+                  {saving ? 'Guardando en MySQL...' : (editingTourId ? 'Guardar Cambios' : 'Crear Tour')}
                 </button>
               </div>
 

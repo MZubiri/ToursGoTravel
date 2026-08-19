@@ -10,4 +10,28 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - NEXT_PUBLIC_WHATSAPP_NUMBER=+525551652314
+      - MYSQL_HOST=gotravel_db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=gotravel_user
+      - MYSQL_PASSWORD=GoTravelSecretPass2026!
+      - MYSQL_DATABASE=gotravel_db
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: gotravel_db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: GoTravelRootPass2026!
+      MYSQL_DATABASE: gotravel_db
+      MYSQL_USER: gotravel_user
+      MYSQL_PASSWORD: GoTravelSecretPass2026!
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_gotravel_data:/var/lib/mysql
+
+volumes:
+  mysql_gotravel_data:

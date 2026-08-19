@@ -1,15 +1,15 @@
 'use client';
 import { useState, useEffect } from 'react';
 import TourCard from './TourCard';
-import { getStoredTours } from '@/lib/tours-store';
+import { fetchServerTours } from '@/lib/tours-store';
 
 export default function PublicToursGrid({ initialTours, locale, dict, whatsappNumber, limit, filterDestination }) {
   const [tours, setTours] = useState(initialTours);
 
   useEffect(() => {
-    const updateTours = () => {
-      const stored = getStoredTours();
-      let filtered = stored.filter(t => t.status !== 'draft');
+    const updateTours = async () => {
+      const serverTours = await fetchServerTours();
+      let filtered = serverTours.filter(t => t.status !== 'draft');
       if (filterDestination && filterDestination !== 'all') {
         filtered = filtered.filter(t => t.destination === filterDestination);
       }

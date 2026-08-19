@@ -1,50 +1,50 @@
 import { NextResponse } from 'next/server';
-import { DEMO_TOURS } from '@/lib/demo-data';
-import fs from 'fs';
-import path from 'path';
+import { fetchToursFromDB, saveTourToDB, deleteTourFromDB } from '@/lib/mysql';
 
-// Guardar en memoria y en archivo temporal de servidor
-let memoryTours = [...DEMO_TOURS];
-const DATA_FILE = path.join(process.cwd(), 'docs', 'tours_data.json');
-
-function loadFromFile() {
+export async function GET(request) {
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const fileData = fs.readFileSync(DATA_FILE, 'utf8');
-      const parsed = JSON.parse(fileData);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        memoryTours = parsed;
-      }
-    }
-  } catch (e) {
-    // Usar datos en memoria
+    const { searchParams } = new URL(request.url);
+    const destination = searchParams.get('destination') || 'all';
+    const tours = await fetchToursFromDB(destination);
+    return NextResponse.json(tours);
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return memoryTours;
-}
-
-export async function GET() {
-  const tours = loadFromFile();
-  return NextResponse.json(tours);
 }
 
 export async function POST(request) {
   try {
-    const updatedTours = await request.json();
-    if (Array.isArray(updatedTours)) {
-      memoryTours = updatedTours;
-      try {
-        const dir = path.dirname(DATA_FILE);
-        if (!fs.existsSync(dir)) {
-          fs.mkdirSync(dir, { recursive: true });
-        }
-        fs.writeFileSync(DATA_FILE, JSON.stringify(updatedTours, null, 2), 'utf8');
-      } catch (err) {
-        console.warn("Could not write to file system, using memory storage:", err);
+    const body = await request.json();
+
+    if (Array.isArray(body)) {
+      for (const tour of body) {
+        await saveTourToDB(tour);
       }
-      return NextResponse.json({ success: true, tours: memoryTours });
+      const allTours = await fetchToursFromDB('all');
+      return NextResponse.json({ success: true, tours: allTours });
+    } else if (body && body.id) {
+      await saveTourToDB(body);
+      const allTours = await fetchToursFromDB('all');
+      return NextResponse.json({ success: true, tour: body, tours: allTours });
     }
+
+    return NextResponse.json({ error: 'Invalid tour payload' }, { status: 400 });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json({ success: false }, { status: 400 });
+}
+
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) {
+      return NextResponse.json({ error: 'Tour ID is required' }, { status: 400 });
+    }
+    await deleteTourFromDB(id);
+    const allTours = await fetchToursFromDB('all');
+    return NextResponse.json({ success: true, tours: allTours });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

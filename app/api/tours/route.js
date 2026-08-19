@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { fetchToursFromDB, saveTourToDB, deleteTourFromDB } from '@/lib/mysql';
 
+// Forzar que esta ruta sea dinámica
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -8,6 +11,7 @@ export async function GET(request) {
     const tours = await fetchToursFromDB(destination);
     return NextResponse.json(tours);
   } catch (error) {
+    console.error('API GET /tours error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -20,16 +24,16 @@ export async function POST(request) {
       for (const tour of body) {
         await saveTourToDB(tour);
       }
-      const allTours = await fetchToursFromDB('all');
-      return NextResponse.json({ success: true, tours: allTours });
     } else if (body && body.id) {
       await saveTourToDB(body);
-      const allTours = await fetchToursFromDB('all');
-      return NextResponse.json({ success: true, tour: body, tours: allTours });
+    } else {
+      return NextResponse.json({ error: 'Invalid tour payload' }, { status: 400 });
     }
 
-    return NextResponse.json({ error: 'Invalid tour payload' }, { status: 400 });
+    const allTours = await fetchToursFromDB('all');
+    return NextResponse.json({ success: true, tours: allTours });
   } catch (error) {
+    console.error('API POST /tours error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -45,6 +49,7 @@ export async function DELETE(request) {
     const allTours = await fetchToursFromDB('all');
     return NextResponse.json({ success: true, tours: allTours });
   } catch (error) {
+    console.error('API DELETE /tours error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -8,9 +8,8 @@ import ContactForm from '@/components/public/ContactForm';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Clock, Award, Headphones } from 'lucide-react';
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+// Forzar renderizado dinámico (SSR) para que siempre consulte MySQL
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage({ params }) {
   const locale = locales.includes(params.locale) ? params.locale : defaultLocale;

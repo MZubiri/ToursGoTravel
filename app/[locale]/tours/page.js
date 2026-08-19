@@ -3,6 +3,9 @@ import { getTours, getGeneralConfig } from '@/lib/firestore';
 import PublicToursGrid from '@/components/public/PublicToursGrid';
 import Link from 'next/link';
 
+// Forzar renderizado dinámico (SSR) para que siempre consulte MySQL
+export const dynamic = 'force-dynamic';
+
 export default async function ToursPage({ params, searchParams }) {
   const locale = locales.includes(params.locale) ? params.locale : defaultLocale;
   const dict = getDictionary(locale);

@@ -1,32 +1,42 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import TourCard from './TourCard';
 import TourCardSkeleton from '@/components/ui/TourCardSkeleton';
-import { fetchServerTours } from '@/lib/tours-store';
 
 export default function PublicToursGrid({ initialTours = [], locale, dict, whatsappNumber, limit, filterDestination }) {
   const [tours, setTours] = useState(initialTours);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(initialTours.length === 0);
 
-  useEffect(() => {
-    const handleUpdate = async () => {
-      setIsLoading(true);
-      const serverTours = await fetchServerTours();
-      if (Array.isArray(serverTours) && serverTours.length > 0) {
-        let filtered = serverTours.filter(t => t.status !== 'draft');
-        if (filterDestination && filterDestination !== 'all') {
-          filtered = filtered.filter(t => t.destination === filterDestination);
-        }
-        setTours(filtered);
+  const fetchFreshTours = useCallback(async () => {
+    try {
+      const res = await fetch('/api/tours', { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!Array.isArray(data) || data.length === 0) return;
+
+      let filtered = data.filter(t => t.status !== 'draft');
+      if (filterDestination && filterDestination !== 'all') {
+        filtered = filtered.filter(t => t.destination === filterDestination);
       }
+      setTours(filtered);
+    } catch (e) {
+      console.warn('Error fetching tours:', e);
+    } finally {
       setIsLoading(false);
-    };
-
-    window.addEventListener('tours_store_updated', handleUpdate);
-    return () => window.removeEventListener('tours_store_updated', handleUpdate);
+    }
   }, [filterDestination]);
 
-  if (isLoading && (!tours || tours.length === 0)) {
+  useEffect(() => {
+    // Siempre obtener datos frescos de MySQL al montar el componente
+    fetchFreshTours();
+
+    // También escuchar eventos locales del admin (misma pestaña)
+    const handleUpdate = () => fetchFreshTours();
+    window.addEventListener('tours_store_updated', handleUpdate);
+    return () => window.removeEventListener('tours_store_updated', handleUpdate);
+  }, [fetchFreshTours]);
+
+  if (isLoading) {
     return <TourCardSkeleton count={limit || 3} />;
   }
 

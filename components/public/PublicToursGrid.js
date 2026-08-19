@@ -3,22 +3,24 @@ import { useState, useEffect } from 'react';
 import TourCard from './TourCard';
 import { fetchServerTours } from '@/lib/tours-store';
 
-export default function PublicToursGrid({ initialTours, locale, dict, whatsappNumber, limit, filterDestination }) {
+export default function PublicToursGrid({ initialTours = [], locale, dict, whatsappNumber, limit, filterDestination }) {
   const [tours, setTours] = useState(initialTours);
 
   useEffect(() => {
-    const updateTours = async () => {
+    // Actualización de tours cuando ocurra un evento de admin o cambio de filtro
+    const handleUpdate = async () => {
       const serverTours = await fetchServerTours();
-      let filtered = serverTours.filter(t => t.status !== 'draft');
-      if (filterDestination && filterDestination !== 'all') {
-        filtered = filtered.filter(t => t.destination === filterDestination);
+      if (Array.isArray(serverTours) && serverTours.length > 0) {
+        let filtered = serverTours.filter(t => t.status !== 'draft');
+        if (filterDestination && filterDestination !== 'all') {
+          filtered = filtered.filter(t => t.destination === filterDestination);
+        }
+        setTours(filtered);
       }
-      setTours(filtered);
     };
 
-    updateTours();
-    window.addEventListener('tours_store_updated', updateTours);
-    return () => window.removeEventListener('tours_store_updated', updateTours);
+    window.addEventListener('tours_store_updated', handleUpdate);
+    return () => window.removeEventListener('tours_store_updated', handleUpdate);
   }, [filterDestination]);
 
   const displayedTours = limit ? tours.slice(0, limit) : tours;

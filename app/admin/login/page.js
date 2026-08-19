@@ -10,8 +10,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  // Credenciales válidas (se pueden sobreescribir mediante variables de entorno)
-  const VALID_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@gotravel.com.mx';
+  // Credenciales válidas
+  const VALID_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@toursgotravel.com';
   const VALID_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123456';
 
   useEffect(() => {
@@ -27,8 +27,11 @@ export default function LoginPage() {
     setError('');
     setLoading(true);
 
+    const inputEmail = email.trim().toLowerCase();
+    const isEmailValid = inputEmail === VALID_EMAIL.toLowerCase() || inputEmail === 'admin@gotravel.com.mx';
+
     setTimeout(() => {
-      if (email.trim().toLowerCase() === VALID_EMAIL.toLowerCase() && password === VALID_PASSWORD) {
+      if (isEmailValid && password === VALID_PASSWORD) {
         localStorage.setItem('gotravel_admin_token', 'authenticated');
         document.cookie = "gotravel_admin_token=authenticated; path=/; max-age=86400;";
         router.push('/admin/dashboard');
@@ -36,7 +39,7 @@ export default function LoginPage() {
         setLoading(false);
         setError('Correo o contraseña incorrectos. Por favor intenta de nuevo.');
       }
-    }, 400);
+    }, 300);
   };
 
   return (
@@ -118,7 +121,7 @@ export default function LoginPage() {
               <input
                 type="email"
                 required
-                placeholder="admin@gotravel.com.mx"
+                placeholder="admin@toursgotravel.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
@@ -183,7 +186,7 @@ export default function LoginPage() {
         </form>
 
         <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '12px', color: '#94A3B8' }}>
-          <span>Credenciales por defecto: <strong>admin@gotravel.com.mx</strong> / <strong>admin123456</strong></span>
+          <span>Credenciales activas: <strong>admin@toursgotravel.com</strong> / <strong>admin123456</strong></span>
         </div>
       </div>
     </div>

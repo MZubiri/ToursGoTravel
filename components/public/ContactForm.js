@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { Send, CheckCircle2, MessageCircle } from 'lucide-react';
-import { saveContactMessage } from '@/lib/firestore';
 import { getWhatsAppLink } from '@/lib/whatsapp';
 
 export default function ContactForm({ locale, dict, config }) {
@@ -17,10 +16,19 @@ export default function ContactForm({ locale, dict, config }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await saveContactMessage({ ...formData, locale });
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, locale }),
+      });
+    } catch (err) {
+      console.warn('Contact form submission error:', err);
+    }
     setLoading(false);
     setSubmitted(true);
   };
+
 
   return (
     <section id="contacto" style={{ padding: '90px 0', backgroundColor: '#FFFFFF' }}>

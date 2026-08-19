@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { Clock, Users, Star, CheckCircle, XCircle, MessageCircle, MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
 import { getWhatsAppLink } from '@/lib/whatsapp';
 
+// Forzar renderizado dinámico (SSR)
+export const dynamic = 'force-dynamic';
+
 export default async function TourDetailPage({ params }) {
   const locale = locales.includes(params.locale) ? params.locale : defaultLocale;
   const dict = getDictionary(locale);

@@ -6,6 +6,9 @@ const nextConfig = {
     unoptimized: true,
   },
   serverExternalPackages: ['mysql2'],
+  experimental: {
+    serverComponentsExternalPackages: ['mysql2'],
+  },
   async redirects() {
     return [
       {

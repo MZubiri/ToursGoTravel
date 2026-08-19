@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDown, MessageCircle } from 'lucide-react';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function Hero({ locale, dict, config }) {
   return (
@@ -120,6 +120,7 @@ export default function Hero({ locale, dict, config }) {
             href={getWhatsAppLink({ phone: config.whatsappNumber })}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackWhatsAppClick}
             style={{
               backgroundColor: 'transparent',
               color: '#FFFFFF',

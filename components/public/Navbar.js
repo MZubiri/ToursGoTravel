@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X, MessageCircle } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function Navbar({ locale, dict, config }) {
   const [scrolled, setScrolled] = useState(false);
@@ -82,6 +82,7 @@ export default function Navbar({ locale, dict, config }) {
             href={getWhatsAppLink({ phone: config.whatsappNumber })}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackWhatsAppClick}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -145,6 +146,7 @@ export default function Navbar({ locale, dict, config }) {
               href={getWhatsAppLink({ phone: config.whatsappNumber })}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               style={{
                 display: 'flex',
                 alignItems: 'center',

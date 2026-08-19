@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, Users, Star, MessageCircle, ArrowRight } from 'lucide-react';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function TourCard({ tour, locale, dict, whatsappNumber }) {
   const title = tour.title[locale] || tour.title.es || '';
@@ -157,6 +157,7 @@ export default function TourCard({ tour, locale, dict, whatsappNumber }) {
               href={getWhatsAppLink({ phone: whatsappNumber, customMessage: waMessage })}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               style={{
                 display: 'flex',
                 alignItems: 'center',

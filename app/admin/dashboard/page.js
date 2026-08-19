@@ -1,10 +1,16 @@
-import { getTours, getGeneralConfig } from '@/lib/firestore';
+import { getTours, getWhatsAppStats } from '@/lib/firestore';
 import Link from 'next/link';
-import { Compass, MessageCircle, Star, Eye, Plus, Settings } from 'lucide-react';
+import { Compass, MessageCircle, Star, Plus } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
   const tours = await getTours('all');
-  const config = await getGeneralConfig();
+  const waClicks = await getWhatsAppStats();
+
+  const avgRating = tours.length > 0
+    ? (tours.reduce((sum, t) => sum + (Number(t.rating) || 5.0), 0) / tours.length).toFixed(1)
+    : '5.0';
 
   return (
     <div>
@@ -42,9 +48,10 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* Stats Cards Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+      {/* Stats Cards Grid (3 métricas dinámicas) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px', marginBottom: '40px' }}>
         
+        {/* Metric 1: Tours Activos */}
         <div style={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '20px', border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
             <span style={{ fontSize: '14px', color: '#64748B', fontWeight: '600' }}>Tours Activos</span>
@@ -55,6 +62,7 @@ export default async function AdminDashboardPage() {
           <span style={{ fontSize: '32px', fontWeight: '800', color: '#0F172A' }}>{tours.length}</span>
         </div>
 
+        {/* Metric 2: Clics a WhatsApp (Contador Real en MySQL) */}
         <div style={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '20px', border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
             <span style={{ fontSize: '14px', color: '#64748B', fontWeight: '600' }}>Clics a WhatsApp</span>
@@ -62,9 +70,10 @@ export default async function AdminDashboardPage() {
               <MessageCircle size={22} />
             </div>
           </div>
-          <span style={{ fontSize: '32px', fontWeight: '800', color: '#0F172A' }}>148</span>
+          <span style={{ fontSize: '32px', fontWeight: '800', color: '#0F172A' }}>{waClicks}</span>
         </div>
 
+        {/* Metric 3: Calificación Promedio (Calculada Dinámicamente) */}
         <div style={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '20px', border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
             <span style={{ fontSize: '14px', color: '#64748B', fontWeight: '600' }}>Calificación Promedio</span>
@@ -72,17 +81,7 @@ export default async function AdminDashboardPage() {
               <Star size={22} fill="#B38938" />
             </div>
           </div>
-          <span style={{ fontSize: '32px', fontWeight: '800', color: '#0F172A' }}>4.9 / 5</span>
-        </div>
-
-        <div style={{ backgroundColor: '#FFFFFF', padding: '24px', borderRadius: '20px', border: '1px solid #E2E8F0', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-            <span style={{ fontSize: '14px', color: '#64748B', fontWeight: '600' }}>WhatsApp Configurado</span>
-            <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#EFF6FF', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Settings size={22} />
-            </div>
-          </div>
-          <span style={{ fontSize: '15px', fontWeight: '700', color: '#1B5E3B' }}>{config.whatsappNumber}</span>
+          <span style={{ fontSize: '32px', fontWeight: '800', color: '#0F172A' }}>{avgRating} <span style={{ fontSize: '18px', color: '#64748B', fontWeight: '600' }}>/ 5</span></span>
         </div>
 
       </div>
@@ -101,6 +100,7 @@ export default async function AdminDashboardPage() {
                 <th style={{ padding: '12px' }}>Destino</th>
                 <th style={{ padding: '12px' }}>Precio MXN</th>
                 <th style={{ padding: '12px' }}>Duración</th>
+                <th style={{ padding: '12px' }}>Calificación</th>
                 <th style={{ padding: '12px' }}>Estado</th>
               </tr>
             </thead>
@@ -108,20 +108,23 @@ export default async function AdminDashboardPage() {
               {tours.map((t) => (
                 <tr key={t.id} style={{ borderBottom: '1px solid #F1F5F9' }}>
                   <td style={{ padding: '16px 12px', fontWeight: '700', color: '#0F172A' }}>
-                    {t.title.es}
+                    {t.title?.es || t.title?.en || t.slug}
                   </td>
                   <td style={{ padding: '16px 12px', color: '#475569', textTransform: 'capitalize' }}>
                     {t.destination}
                   </td>
                   <td style={{ padding: '16px 12px', fontWeight: '700', color: '#1B5E3B' }}>
-                    ${t.priceAdult.toLocaleString()}
+                    ${t.priceAdult?.toLocaleString()}
                   </td>
                   <td style={{ padding: '16px 12px', color: '#64748B' }}>
                     {t.duration}
                   </td>
+                  <td style={{ padding: '16px 12px', color: '#B38938', fontWeight: '700' }}>
+                    ★ {t.rating || 5.0}
+                  </td>
                   <td style={{ padding: '16px 12px' }}>
                     <span style={{ backgroundColor: '#F0FDF4', color: '#1B5E3B', padding: '4px 12px', borderRadius: '12px', fontWeight: '700', fontSize: '12px' }}>
-                      Publicado
+                      {t.status === 'draft' ? 'Borrador' : 'Publicado'}
                     </span>
                   </td>
                 </tr>

@@ -1,5 +1,5 @@
 import { MessageCircle } from 'lucide-react';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function WhatsAppButton({ whatsappNumber }) {
   return (
@@ -7,6 +7,7 @@ export default function WhatsAppButton({ whatsappNumber }) {
       href={getWhatsAppLink({ phone: whatsappNumber })}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={trackWhatsAppClick}
       className="animate-pulse-wa"
       style={{
         position: 'fixed',

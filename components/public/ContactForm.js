@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Send, CheckCircle2, MessageCircle } from 'lucide-react';
-import { getWhatsAppLink } from '@/lib/whatsapp';
+import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function ContactForm({ locale, dict, config }) {
   const [formData, setFormData] = useState({
@@ -63,6 +63,7 @@ export default function ContactForm({ locale, dict, config }) {
               href={getWhatsAppLink({ phone: config.whatsappNumber })}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

@@ -1,6 +1,6 @@
 import { getDictionary, locales, defaultLocale } from '@/lib/i18n';
 import { getTours, getGeneralConfig } from '@/lib/firestore';
-import TourCard from '@/components/public/TourCard';
+import PublicToursGrid from '@/components/public/PublicToursGrid';
 import Link from 'next/link';
 
 export default async function ToursPage({ params, searchParams }) {
@@ -68,24 +68,14 @@ export default async function ToursPage({ params, searchParams }) {
           })}
         </div>
 
-        {/* Tours Grid */}
-        {tours.length > 0 ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
-            {tours.map((tour) => (
-              <TourCard
-                key={tour.id}
-                tour={tour}
-                locale={locale}
-                dict={dict}
-                whatsappNumber={config.whatsappNumber}
-              />
-            ))}
-          </div>
-        ) : (
-          <div style={{ textAlign: 'center', padding: '60px 20px', backgroundColor: '#FFFFFF', borderRadius: '24px', border: '1px solid #E2E8F0' }}>
-            <p style={{ fontSize: '18px', color: '#64748B' }}>{dict.tours.notFound}</p>
-          </div>
-        )}
+        {/* Tours Grid Sincronizado */}
+        <PublicToursGrid
+          initialTours={tours}
+          locale={locale}
+          dict={dict}
+          whatsappNumber={config.whatsappNumber}
+          filterDestination={selectedDest}
+        />
 
       </div>
     </div>

@@ -1,14 +1,18 @@
 'use client';
-import { useState } from 'react';
-import { DEMO_TOURS } from '@/lib/demo-data';
+import { useState, useEffect } from 'react';
+import { getStoredTours, saveStoredTours } from '@/lib/tours-store';
 import { Plus, Edit3, Trash2, Globe, Check, X, Eye } from 'lucide-react';
 import ImageUploader from '@/components/admin/ImageUploader';
 
 export default function AdminToursPage() {
-  const [toursList, setToursList] = useState(DEMO_TOURS);
+  const [toursList, setToursList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTourId, setEditingTourId] = useState(null);
   const [activeLangTab, setActiveLangTab] = useState('es');
+
+  useEffect(() => {
+    setToursList(getStoredTours());
+  }, []);
 
   // Initial empty form state matching all public tour fields
   const emptyForm = {
@@ -78,7 +82,7 @@ export default function AdminToursPage() {
         de: Array.isArray(tour.includes?.de) ? tour.includes.de.join('\n') : tour.includes?.de || ''
       },
       excludes: {
-        es: Array.isArray(tour.excludes?.es) ? tour.excludes.es.join('\n') : tour.excludes?.es || '',
+        es: Array.isArray(tour.excludes?.es) ? tour.excludes.es.join('\n') : tour.excludes.es || '',
         en: Array.isArray(tour.excludes?.en) ? tour.excludes.en.join('\n') : tour.excludes?.en || '',
         fr: Array.isArray(tour.excludes?.fr) ? tour.excludes.fr.join('\n') : tour.excludes?.fr || '',
         pt: Array.isArray(tour.excludes?.pt) ? tour.excludes.pt.join('\n') : tour.excludes?.pt || '',
@@ -125,28 +129,35 @@ export default function AdminToursPage() {
       }
     };
 
+    let updatedList;
     if (editingTourId) {
-      setToursList(toursList.map(t => t.id === editingTourId ? processedTour : t));
+      updatedList = toursList.map(t => t.id === editingTourId ? processedTour : t);
     } else {
-      setToursList([processedTour, ...toursList]);
+      updatedList = [processedTour, ...toursList];
     }
 
+    setToursList(updatedList);
+    saveStoredTours(updatedList);
     setIsModalOpen(false);
   };
 
   const handleDelete = (id) => {
     if (confirm('¿Estás seguro de eliminar este tour?')) {
-      setToursList(toursList.filter(t => t.id !== id));
+      const updatedList = toursList.filter(t => t.id !== id);
+      setToursList(updatedList);
+      saveStoredTours(updatedList);
     }
   };
 
   const toggleStatus = (id) => {
-    setToursList(toursList.map(t => {
+    const updatedList = toursList.map(t => {
       if (t.id === id) {
         return { ...t, status: t.status === 'published' ? 'draft' : 'published' };
       }
       return t;
-    }));
+    });
+    setToursList(updatedList);
+    saveStoredTours(updatedList);
   };
 
   return (
@@ -155,10 +166,10 @@ export default function AdminToursPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '30px', fontWeight: '800', color: '#0F172A', marginBottom: '4px' }}>
-            Gestión de Tours (CRUD)
+            Gestión de Tours (CRUD Persistente)
           </h1>
           <p style={{ fontSize: '15px', color: '#64748B' }}>
-            Crea, edita y administra los campos públicos y traducciones en los 5 idiomas
+            Crea, edita y administra los campos públicos y traducciones en los 5 idiomas (Sincronizado en tiempo real)
           </p>
         </div>
 
@@ -210,8 +221,8 @@ export default function AdminToursPage() {
                     {t.destination}
                   </td>
                   <td style={{ padding: '16px 12px' }}>
-                    <div style={{ fontWeight: '700', color: '#1B5E3B' }}>${t.priceAdult.toLocaleString()} MXN</div>
-                    <span style={{ fontSize: '12px', color: '#64748B' }}>Niño: ${t.priceChild.toLocaleString()} MXN</span>
+                    <div style={{ fontWeight: '700', color: '#1B5E3B' }}>${t.priceAdult?.toLocaleString()} MXN</div>
+                    <span style={{ fontSize: '12px', color: '#64748B' }}>Niño: ${t.priceChild?.toLocaleString()} MXN</span>
                   </td>
                   <td style={{ padding: '16px 12px', color: '#475569', fontSize: '13px' }}>
                     <div>⏱ {t.duration}</div>

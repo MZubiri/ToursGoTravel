@@ -2,7 +2,7 @@ import { getDictionary, locales, defaultLocale } from '@/lib/i18n';
 import { getTours, getTestimonials, getGeneralConfig } from '@/lib/firestore';
 import Hero from '@/components/public/Hero';
 import DestinationCard from '@/components/public/DestinationCard';
-import TourCard from '@/components/public/TourCard';
+import PublicToursGrid from '@/components/public/PublicToursGrid';
 import Testimonials from '@/components/public/Testimonials';
 import ContactForm from '@/components/public/ContactForm';
 import Link from 'next/link';
@@ -108,18 +108,14 @@ export default async function HomePage({ params }) {
             </Link>
           </div>
 
-          {/* Tours Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
-            {tours.slice(0, 6).map((tour) => (
-              <TourCard
-                key={tour.id}
-                tour={tour}
-                locale={locale}
-                dict={dict}
-                whatsappNumber={config.whatsappNumber}
-              />
-            ))}
-          </div>
+          {/* Tours Grid Sincronizado */}
+          <PublicToursGrid
+            initialTours={tours}
+            locale={locale}
+            dict={dict}
+            whatsappNumber={config.whatsappNumber}
+            limit={6}
+          />
         </div>
       </section>
 

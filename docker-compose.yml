@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  gotravel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tours_gotravel
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_WHATSAPP_NUMBER=+525551652314

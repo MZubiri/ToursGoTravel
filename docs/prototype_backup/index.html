@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viajes | Tours y Experiencias en México</title>
+    <meta name="description" content="Descubre México con Viajes. Tours exclusivos en Los Cabos, Cancún y Puerto Vallarta. Reserva ahora por WhatsApp.">
+    <meta name="keywords" content="tours México, viajes Cancún, tours Los Cabos, tours Puerto Vallarta, vacaciones México, experiencias México">
+    <meta name="author" content="Viajes">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Viajes | Tours y Experiencias en México">
+    <meta property="og:description" content="Descubre México con Viajes. Tours exclusivos en Los Cabos, Cancún y Puerto Vallarta.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/hero.jpg">
+    <meta property="og:locale" content="es_MX">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✈️%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="loading">
+
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <a href="#inicio" class="navbar-logo">
+                <img src="images/logo.jpg" alt="Viajes Logo">
+            </a>
+            <nav class="navbar-center">
+                <ul class="navbar-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#destinos">Destinos</a></li>
+                    <li><a href="#tours">Tours</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="navbar-right">
+                <div class="lang-selector" id="langSelector">
+                    <span><i class="fas fa-globe"></i> ES <i class="fas fa-chevron-down" style="font-size:10px"></i></span>
+                    <div class="lang-dropdown">
+                        <a href="#" data-lang="ES">🇲🇽 Español</a>
+                        <a href="#" data-lang="EN">🇺🇸 English</a>
+                        <a href="#" data-lang="FR">🇫🇷 Français</a>
+                        <a href="#" data-lang="PT">🇧🇷 Português</a>
+                        <a href="#" data-lang="DE">🇩🇪 Deutsch</a>
+                    </div>
+                </div>
+                <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20información%20sobre%20sus%20tours" class="navbar-cta" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Contáctanos
+                </a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Nav -->
+    <nav class="mobile-nav" id="mobileNav">
+        <a href="#inicio">Inicio</a>
+        <a href="#destinos">Destinos</a>
+        <a href="#tours">Tours</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+        <a href="https://wa.me/525551652314" target="_blank"><i class="fab fa-whatsapp"></i> Contáctanos</a>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <p class="hero-subtitle">DESCUBRE MÉXICO</p>
+                <h1>Vive Experiencias Inolvidables</h1>
+                <p>Tours exclusivos y paquetes vacacionales en Los Cabos, Cancún y Puerto Vallarta</p>
+                <div class="hero-buttons">
+                    <a href="#tours" class="btn-primary">Explorar Tours</a>
+                    <a href="https://wa.me/525551652314?text=Hola,%20me%20gustaría%20hablar%20con%20un%20asesor" class="btn-secondary" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Hablar con un Asesor
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- Destinations -->
+        <section class="destinations" id="destinos">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Nuestros Destinos</h2>
+                    <p>Explora los mejores destinos de México</p>
+                </div>
+                <div class="destinations-grid">
+                    <div class="destination-card fade-in">
+                        <div class="destination-card-image">
+                            <img src="images/cabos.jpg" alt="Los Cabos - El Arco" loading="lazy">
+                        </div>
+                        <div class="destination-card-content">
+                            <h3>Los Cabos</h3>
+                            <p class="tour-count"><i class="fas fa-compass"></i> 12 tours disponibles</p>
+                            <a href="#tours" class="btn-link">Ver Tours <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="destination-card fade-in">
+                        <div class="destination-card-image">
+                            <img src="images/cancun.jpg" alt="Cancún - Zona Hotelera" loading="lazy">
+                        </div>
+                        <div class="destination-card-content">
+                            <h3>Cancún</h3>
+                            <p class="tour-count"><i class="fas fa-compass"></i> 8 tours disponibles</p>
+                            <a href="#tours" class="btn-link">Ver Tours <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="destination-card fade-in">
+                        <div class="destination-card-image">
+                            <img src="images/vallarta.jpg" alt="Puerto Vallarta - Malecón" loading="lazy">
+                        </div>
+                        <div class="destination-card-content">
+                            <h3>Puerto Vallarta</h3>
+                            <p class="tour-count"><i class="fas fa-compass"></i> 10 tours disponibles</p>
+                            <a href="#tours" class="btn-link">Ver Tours <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tours -->
+        <section class="tours" id="tours">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Tours y Experiencias</h2>
+                    <p>Encuentra tu próxima aventura</p>
+                </div>
+                <div class="tour-tabs fade-in">
+                    <button class="tour-tab active" data-filter="all">Todos</button>
+                    <button class="tour-tab" data-filter="cabos">Los Cabos</button>
+                    <button class="tour-tab" data-filter="cancun">Cancún</button>
+                    <button class="tour-tab" data-filter="vallarta">Vallarta</button>
+                </div>
+                <div class="tours-grid">
+                    <!-- Tour 1 -->
+                    <div class="tour-card fade-in" data-destination="cabos" data-full-description="Explora los arrecifes de coral y nada junto a peces tropicales en las cristalinas aguas de Chileno Bay. Nuestro guía certificado te llevará a los mejores puntos de snorkel donde podrás observar mantarrayas, peces ángel y tortugas marinas en su hábitat natural. Equipo profesional incluido." data-includes="Equipo de snorkel profesional,Guía bilingüe certificado,Transportación ida y vuelta al hotel,Bebidas y snacks a bordo,Fotos y video del recorrido,Seguro de viajero">
+                        <div class="tour-card-image">
+                            <img src="images/tour-snorkel.jpg" alt="Snorkel en Chileno Bay" loading="lazy">
+                            <span class="tour-card-badge">Los Cabos</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Snorkel en Chileno Bay</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 4 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 8 personas</span>
+                            </div>
+                            <p class="tour-card-description">Explora los arrecifes de coral y nada junto a peces tropicales en las cristalinas aguas de Chileno Bay.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$1,200 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Snorkel%20en%20Chileno%20Bay%20en%20Los%20Cabos.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tour 2 -->
+                    <div class="tour-card fade-in" data-destination="cabos" data-full-description="Navega en un yate de lujo hasta el icónico Arco de Cabo San Lucas con bebidas y snacks incluidos. Disfruta de la vista panorámica de la costa, avistamiento de lobos marinos en la colonia y una parada para nadar en Playa del Amor. Música en vivo y barra libre a bordo." data-includes="Yate privado de lujo,Barra libre (bebidas nacionales),Snacks y bocadillos gourmet,Equipo de snorkel,Música en vivo,Capitán y tripulación profesional">
+                        <div class="tour-card-image">
+                            <img src="images/tour-yacht.jpg" alt="Paseo en Yate al Arco" loading="lazy">
+                            <span class="tour-card-badge">Los Cabos</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Paseo en Yate al Arco</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 3 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 12 personas</span>
+                            </div>
+                            <p class="tour-card-description">Navega en un yate de lujo hasta el icónico Arco de Cabo San Lucas con bebidas y snacks incluidos.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$2,500 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Paseo%20en%20Yate%20al%20Arco%20en%20Los%20Cabos.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tour 3 -->
+                    <div class="tour-card fade-in" data-destination="cancun" data-full-description="Visita una de las Siete Maravillas del Mundo con guía certificado, almuerzo buffet y cenote incluido. Recorre la zona arqueológica con explicación histórica detallada, disfruta de un baño refrescante en un cenote sagrado maya y saborea la gastronomía regional en un restaurante típico." data-includes="Transporte en autobús climatizado,Guía arqueólogo certificado INAH,Entrada a la zona arqueológica,Almuerzo buffet regional,Acceso a cenote,Tiempo libre para compras de artesanías">
+                        <div class="tour-card-image">
+                            <img src="images/tour-ruins.jpg" alt="Chichén Itzá Clásico" loading="lazy">
+                            <span class="tour-card-badge">Cancún</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Chichén Itzá Clásico</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 10 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 20 personas</span>
+                            </div>
+                            <p class="tour-card-description">Visita una de las Siete Maravillas del Mundo con guía certificado, almuerzo buffet y cenote incluido.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$1,800 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Chichén%20Itzá%20Clásico%20en%20Cancún.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tour 4 -->
+                    <div class="tour-card fade-in" data-destination="vallarta" data-full-description="Vuela sobre la selva tropical en un circuito de 8 tirolesas con vistas espectaculares a las montañas de la Sierra Madre. Incluye un recorrido por puentes colgantes, rappel de 30 metros y una degustación de tequila artesanal al finalizar la aventura." data-includes="Circuito de 8 tirolesas,Equipo de seguridad certificado,Guías de aventura especializados,Rappel de 30 metros,Puentes colgantes,Degustación de tequila y snacks">
+                        <div class="tour-card-image">
+                            <img src="images/tour-zipline.jpg" alt="Tirolesa en la Sierra" loading="lazy">
+                            <span class="tour-card-badge">Vallarta</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Tirolesa en la Sierra</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 5 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 10 personas</span>
+                            </div>
+                            <p class="tour-card-description">Vuela sobre la selva tropical en un circuito de 8 tirolesas con vistas espectaculares a las montañas.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$1,500 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Tirolesa%20en%20la%20Sierra%20en%20Puerto%20Vallarta.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tour 5 -->
+                    <div class="tour-card fade-in" data-destination="cancun" data-full-description="Navega a Isla Mujeres en catamarán, snorkel en el arrecife y tiempo libre en la isla con barra libre. Zarpa desde la marina de Cancún hacia el arrecife Manchones para una sesión de snorkel con peces tropicales, luego desembarca en la pintoresca Isla Mujeres para explorar sus calles, playas y tiendas." data-includes="Catamarán con capacidad de 30 personas,Barra libre nacional,Buffet a bordo,Equipo de snorkel,DJ y música,Tiempo libre en Isla Mujeres">
+                        <div class="tour-card-image">
+                            <img src="images/tour-snorkel.jpg" alt="Isla Mujeres en Catamarán" loading="lazy">
+                            <span class="tour-card-badge">Cancún</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Isla Mujeres en Catamarán</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 8 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 30 personas</span>
+                            </div>
+                            <p class="tour-card-description">Navega a Isla Mujeres en catamarán, snorkel en el arrecife y tiempo libre en la isla con barra libre.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$2,200 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Isla%20Mujeres%20en%20Catamarán%20en%20Cancún.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tour 6 -->
+                    <div class="tour-card fade-in" data-destination="vallarta" data-full-description="Descubre la famosa Playa del Amor en las Islas Marietas, snorkel y avistamiento de aves marinas. Navega por la Bahía de Banderas hasta este Parque Nacional protegido por la UNESCO, donde podrás nadar en la playa escondida, observar mantarrayas, delfines y ballenas jorobadas (en temporada)." data-includes="Lancha rápida ida y vuelta,Guía naturalista certificado,Equipo de snorkel,Chaleco salvavidas,Permiso de acceso al parque nacional,Lunch box y bebidas">
+                        <div class="tour-card-image">
+                            <img src="images/tour-yacht.jpg" alt="Islas Marietas" loading="lazy">
+                            <span class="tour-card-badge">Vallarta</span>
+                        </div>
+                        <div class="tour-card-content">
+                            <h3>Islas Marietas</h3>
+                            <div class="tour-card-meta">
+                                <span><i class="far fa-clock"></i> 6 horas</span>
+                                <span><i class="fas fa-users"></i> Hasta 15 personas</span>
+                            </div>
+                            <p class="tour-card-description">Descubre la famosa Playa del Amor en las Islas Marietas, snorkel y avistamiento de aves marinas.</p>
+                            <div class="tour-card-footer">
+                                <div class="tour-card-price">
+                                    Desde<br><strong>$1,900 MXN</strong>/persona
+                                </div>
+                                <div class="tour-card-actions">
+                                    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20el%20tour%20Islas%20Marietas%20en%20Puerto%20Vallarta.%20¿Me%20pueden%20dar%20más%20información?" class="btn-whatsapp" target="_blank">
+                                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                                    </a>
+                                    <button class="btn-details">Ver detalles →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section class="about" id="nosotros">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text fade-in">
+                        <h2>¿Por Qué Elegirnos?</h2>
+                        <p>En Viajes nos especializamos en crear experiencias únicas e inolvidables en los destinos más hermosos de México. Con más de 5 años de experiencia, nuestro equipo se dedica a planificar cada detalle para que tú solo te preocupes por disfrutar.</p>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">🛡️</div>
+                                <h4>Seguridad Garantizada</h4>
+                                <p>Todos nuestros tours cuentan con seguros y equipo certificado</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">💎</div>
+                                <h4>Experiencias Premium</h4>
+                                <p>Servicios de primera calidad con atención personalizada</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🤝</div>
+                                <h4>Atención 24/7</h4>
+                                <p>Soporte en español e inglés las 24 horas del día</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">⭐</div>
+                                <h4>+500 Clientes Felices</h4>
+                                <p>Miles de viajeros confían en nosotros cada año</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image fade-in">
+                        <img src="images/hero.jpg" alt="Viajes - Experiencias en México" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials" id="testimonios">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Lo Que Dicen Nuestros Clientes</h2>
+                    <p>Experiencias reales de viajeros como tú</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card fade-in">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <p class="testimonial-text">El tour en yate fue espectacular. Todo perfectamente organizado, el equipo muy profesional y las vistas increíbles. ¡100% recomendado!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <h4>María García</h4>
+                                <span>Los Cabos</span>
+                                <div class="testimonial-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card fade-in">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <p class="testimonial-text">The Chichén Itzá tour exceeded our expectations. Our guide was extremely knowledgeable and the cenote was a highlight. Best tour company in Mexico!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <h4>John Smith</h4>
+                                <span>Cancún</span>
+                                <div class="testimonial-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card fade-in">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <p class="testimonial-text">Las Islas Marietas son un paraíso. Viajes organizó todo de manera impecable. Ya estamos planeando nuestro próximo viaje con ellos.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-author-info">
+                                <h4>Ana Rodríguez</h4>
+                                <span>Vallarta</span>
+                                <div class="testimonial-stars">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact" id="contacto">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Contáctanos</h2>
+                    <p>Estamos listos para ayudarte a planear tu próxima aventura</p>
+                </div>
+                <div class="contact-grid">
+                    <form class="contact-form fade-in" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" placeholder="Tu nombre completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Destino de Interés</label>
+                            <select id="destination" name="destination" required>
+                                <option value="">Selecciona un destino</option>
+                                <option value="Los Cabos">Los Cabos</option>
+                                <option value="Cancún">Cancún</option>
+                                <option value="Puerto Vallarta">Puerto Vallarta</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" placeholder="Cuéntanos sobre tu viaje ideal..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</button>
+                        <div class="form-success" id="formSuccess" style="display:none;">
+                            <i class="fas fa-check-circle"></i> ¡Mensaje enviado! Te redirigimos a WhatsApp...
+                        </div>
+                    </form>
+                    <div class="contact-info fade-in">
+                        <h3>Información de Contacto</h3>
+                        <div class="contact-info-item">
+                            <i class="fas fa-phone"></i>
+                            <p><strong>Teléfono</strong><br>+52 555 165 2314</p>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <p><strong>Email</strong><br>info@viajes.mx</p>
+                        </div>
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p><strong>Ubicación</strong><br>Ciudad de México, México</p>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                        <a href="https://wa.me/525551652314?text=Hola,%20me%20gustaría%20más%20información%20sobre%20sus%20tours" class="btn-whatsapp-large" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="images/logo.jpg" alt="Viajes">
+                    <p>Tu mejor aliado para descubrir México. Tours exclusivos, experiencias únicas y atención personalizada en los destinos más hermosos del país.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#destinos">Destinos</a></li>
+                        <li><a href="#tours">Tours</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Destinos</h4>
+                    <ul>
+                        <li><a href="#tours">Los Cabos</a></li>
+                        <li><a href="#tours">Cancún</a></li>
+                        <li><a href="#tours">Puerto Vallarta</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:+525551652314"><i class="fas fa-phone"></i> +52 555 165 2314</a></li>
+                        <li><a href="mailto:info@viajes.mx"><i class="fas fa-envelope"></i> info@viajes.mx</a></li>
+                    </ul>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Viajes. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/525551652314?text=Hola,%20me%20interesa%20información%20sobre%20sus%20tours" class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <!-- Tour Detail Modal -->
+    <div class="modal-overlay" id="tourModal">
+        <div class="modal">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+                <span class="modal-badge" id="modalBadge"></span>
+            </div>
+            <div class="modal-body">
+                <h2 id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <div class="modal-includes">
+                    <h4><i class="fas fa-check-circle"></i> ¿Qué incluye?</h4>
+                    <ul id="modalIncludes"></ul>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-price" id="modalPrice"></div>
+                    <a href="#" class="modal-whatsapp" id="modalWhatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Reservar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

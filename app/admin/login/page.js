@@ -1,22 +1,42 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('admin@gotravel.com.mx');
-  const [password, setPassword] = useState('admin123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Credenciales válidas (se pueden sobreescribir mediante variables de entorno)
+  const VALID_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@gotravel.com.mx';
+  const VALID_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123456';
+
+  useEffect(() => {
+    // Si ya está autenticado, redirigir al dashboard automáticamente
+    const token = localStorage.getItem('gotravel_admin_token');
+    if (token === 'authenticated') {
+      router.replace('/admin/dashboard');
+    }
+  }, [router]);
+
   const handleLogin = (e) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
-    // Simular autenticación rápida
+
     setTimeout(() => {
-      setLoading(false);
-      router.push('/admin/dashboard');
-    }, 600);
+      if (email.trim().toLowerCase() === VALID_EMAIL.toLowerCase() && password === VALID_PASSWORD) {
+        localStorage.setItem('gotravel_admin_token', 'authenticated');
+        document.cookie = "gotravel_admin_token=authenticated; path=/; max-age=86400;";
+        router.push('/admin/dashboard');
+      } else {
+        setLoading(false);
+        setError('Correo o contraseña incorrectos. Por favor intenta de nuevo.');
+      }
+    }, 400);
   };
 
   return (
@@ -40,7 +60,7 @@ export default function LoginPage() {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
         }}
       >
-        {/* Brand */}
+        {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <div
             style={{
@@ -65,6 +85,28 @@ export default function LoginPage() {
           </p>
         </div>
 
+        {/* Error Banner */}
+        {error && (
+          <div
+            style={{
+              backgroundColor: '#FEF2F2',
+              border: '1px solid #FCA5A5',
+              borderRadius: '12px',
+              padding: '12px 16px',
+              color: '#991B1B',
+              fontSize: '13px',
+              fontWeight: '600',
+              marginBottom: '20px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <AlertCircle size={18} />
+            <span>{error}</span>
+          </div>
+        )}
+
         {/* Form */}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
@@ -76,6 +118,7 @@ export default function LoginPage() {
               <input
                 type="email"
                 required
+                placeholder="admin@gotravel.com.mx"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
@@ -99,6 +142,7 @@ export default function LoginPage() {
               <input
                 type="password"
                 required
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{
@@ -129,12 +173,18 @@ export default function LoginPage() {
               fontSize: '16px',
               marginTop: '10px',
               boxShadow: '0 6px 20px rgba(27, 94, 59, 0.3)',
+              cursor: loading ? 'wait' : 'pointer',
+              opacity: loading ? 0.7 : 1,
             }}
           >
-            <span>{loading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}</span>
+            <span>{loading ? 'Verificando...' : 'Iniciar Sesión'}</span>
             <ArrowRight size={18} />
           </button>
         </form>
+
+        <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '12px', color: '#94A3B8' }}>
+          <span>Credenciales por defecto: <strong>admin@gotravel.com.mx</strong> / <strong>admin123456</strong></span>
+        </div>
       </div>
     </div>
   );

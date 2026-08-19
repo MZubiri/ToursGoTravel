@@ -14,8 +14,9 @@ export default function AdminSidebar() {
   ];
 
   const handleLogout = () => {
-    // Redirigir al sitio público o login
-    router.push('/admin/login');
+    localStorage.removeItem('gotravel_admin_token');
+    document.cookie = "gotravel_admin_token=; path=/; max-age=0;";
+    router.replace('/admin/login');
   };
 
   return (
@@ -105,6 +106,9 @@ export default function AdminSidebar() {
             fontWeight: '600',
             width: '100%',
             textAlign: 'left',
+            backgroundColor: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
           }}
         >
           <LogOut size={18} />

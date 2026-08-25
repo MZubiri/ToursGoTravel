@@ -15,6 +15,9 @@ services:
       - MYSQL_USER=gotravel_user
       - MYSQL_PASSWORD=GoTravelSecretPass2026!
       - MYSQL_DATABASE=gotravel_db
+    networks:
+      - default
+      - coolify
     depends_on:
       - db
 
@@ -30,8 +33,18 @@ services:
       MYSQL_PASSWORD: GoTravelSecretPass2026!
     ports:
       - "3307:3306"
+    networks:
+      - default
+      - coolify
     volumes:
       - mysql_gotravel_data:/var/lib/mysql
+
+networks:
+  default:
+    name: toursgotravel_default
+  coolify:
+    external: true
+    name: coolify
 
 volumes:
   mysql_gotravel_data:

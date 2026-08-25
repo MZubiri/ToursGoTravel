@@ -7,17 +7,55 @@ export default function ImageUploader({ images = [], onChange }) {
   const [isDragging, setIsDragging] = useState(false);
   const [urlInput, setUrlInput] = useState('');
 
-  const handleFiles = (files) => {
-    const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
-    
-    validFiles.forEach(file => {
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const newImage = e.target.result;
-        onChange([...images, newImage]);
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 1200;
+
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convertir a JPEG comprimido (80% calidad)
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+          resolve(compressedDataUrl);
+        };
+        img.onerror = () => resolve(e.target.result);
+        img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     });
+  };
+
+  const handleFiles = async (files) => {
+    const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+    const compressedImages = [];
+    
+    for (const file of validFiles) {
+      const compressed = await compressImage(file);
+      compressedImages.push(compressed);
+    }
+    
+    if (compressedImages.length > 0) {
+      onChange([...images, ...compressedImages]);
+    }
   };
 
   const handleDragOver = (e) => {

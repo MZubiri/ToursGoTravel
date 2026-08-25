@@ -11,9 +11,12 @@ export default function Footer({ locale, dict, config }) {
           {/* Col 1: Brand Info */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-              <div style={{ position: 'relative', width: '150px', height: '46px' }}>
-                <Image src={config.logo || "/images/logo.png"} alt={config.companyName} fill style={{ objectFit: 'contain' }} />
+              <div style={{ position: 'relative', width: '46px', height: '46px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #D4A853', boxShadow: '0 4px 12px rgba(0,0,0,0.3)' }}>
+                <Image src={config.logo || "/images/logo.jpg"} alt={config.companyName} fill style={{ objectFit: 'cover' }} />
               </div>
+              <span style={{ fontSize: '22px', fontWeight: '800', color: '#FFFFFF' }}>
+                Go<span style={{ color: '#D4A853' }}>Travel</span>
+              </span>
             </div>
             <p style={{ fontSize: '14px', lineHeight: 1.6, color: '#94A3B8', marginBottom: '24px' }}>
               {dict.footer.description}

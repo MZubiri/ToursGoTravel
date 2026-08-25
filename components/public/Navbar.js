@@ -47,10 +47,13 @@ export default function Navbar({ locale, dict, config }) {
     >
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         {/* Logo */}
-        <Link href={`/${locale}`} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-          <div style={{ position: 'relative', width: '160px', height: '50px' }}>
-            <Image src={config.logo || "/images/logo.png"} alt={config.companyName} fill style={{ objectFit: 'contain' }} priority />
+        <Link href={`/${locale}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
+          <div style={{ position: 'relative', width: '48px', height: '48px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #D4A853', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
+            <Image src={config.logo || "/images/logo.jpg"} alt={config.companyName} fill style={{ objectFit: 'cover' }} priority />
           </div>
+          <span style={{ fontSize: '24px', fontWeight: '800', color: scrolled ? '#1B5E3B' : '#FFFFFF', letterSpacing: '-0.5px' }}>
+            Go<span style={{ color: '#D4A853' }}>Travel</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation Links */}

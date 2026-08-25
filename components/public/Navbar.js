@@ -2,8 +2,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, MessageCircle } from 'lucide-react';
-import LanguageSelector from './LanguageSelector';
 import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function Navbar({ locale, dict, config }) {
@@ -72,9 +70,8 @@ export default function Navbar({ locale, dict, config }) {
           ))}
         </nav>
 
-        {/* Right Actions (Language Selector & WA Button) */}
+        {/* Right Actions (WA Button) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }} className="desktop-only">
-          <LanguageSelector currentLocale={locale} />
           <a
             href={getWhatsAppLink({ phone: config.whatsappNumber })}
             target="_blank"
@@ -137,8 +134,7 @@ export default function Navbar({ locale, dict, config }) {
             </Link>
           ))}
           <div style={{ height: '1px', backgroundColor: '#E2E8F0', margin: '8px 0' }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <LanguageSelector currentLocale={locale} />
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <a
               href={getWhatsAppLink({ phone: config.whatsappNumber })}
               target="_blank"

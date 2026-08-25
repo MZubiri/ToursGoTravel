@@ -8,7 +8,6 @@ export default function AdminToursPage() {
   const [toursList, setToursList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTourId, setEditingTourId] = useState(null);
-  const [activeLangTab, setActiveLangTab] = useState('es');
   const [saving, setSaving] = useState(false);
 
   const loadTours = async () => {
@@ -95,7 +94,6 @@ export default function AdminToursPage() {
         de: Array.isArray(tour.excludes?.de) ? tour.excludes.de.join('\n') : tour.excludes?.de || ''
       }
     });
-    setActiveLangTab('es');
     setIsModalOpen(true);
   };
 
@@ -198,7 +196,6 @@ export default function AdminToursPage() {
                 <th style={{ padding: '14px 12px' }}>Destino</th>
                 <th style={{ padding: '14px 12px' }}>Precios (Adulto/Niño)</th>
                 <th style={{ padding: '14px 12px' }}>Duración & Capacidad</th>
-                <th style={{ padding: '14px 12px' }}>Traducciones</th>
                 <th style={{ padding: '14px 12px' }}>Estado</th>
                 <th style={{ padding: '14px 12px', textAlign: 'right' }}>Acciones</th>
               </tr>
@@ -222,26 +219,6 @@ export default function AdminToursPage() {
                   <td style={{ padding: '16px 12px', color: '#475569', fontSize: '13px' }}>
                     <div>⏱ {t.duration}</div>
                     <div>👥 Max {t.maxCapacity} paxs</div>
-                  </td>
-                  <td style={{ padding: '16px 12px' }}>
-                    <div style={{ display: 'flex', gap: '4px' }}>
-                      {['es', 'en', 'fr', 'pt', 'de'].map(lang => (
-                        <span
-                          key={lang}
-                          style={{
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            padding: '2px 6px',
-                            borderRadius: '6px',
-                            backgroundColor: t.title?.[lang] ? '#F0FDF4' : '#F1F5F9',
-                            color: t.title?.[lang] ? '#1B5E3B' : '#94A3B8',
-                            textTransform: 'uppercase'
-                          }}
-                        >
-                          {lang}
-                        </span>
-                      ))}
-                    </div>
                   </td>
                   <td style={{ padding: '16px 12px' }}>
                     <button
@@ -308,52 +285,23 @@ export default function AdminToursPage() {
                 onChange={(newImages) => setFormData({ ...formData, images: newImages })}
               />
 
-              {/* Language Selector Tabs */}
-              <div>
-                <label style={{ display: 'block', fontSize: '13px', fontWeight: '700', color: '#64748B', marginBottom: '8px', textTransform: 'uppercase' }}>
-                  Pestañas de Idioma para Campos Traducibles
-                </label>
-                <div style={{ display: 'flex', gap: '8px', backgroundColor: '#F8FAFC', padding: '6px', borderRadius: '14px', border: '1px solid #E2E8F0' }}>
-                  {['es', 'en', 'fr', 'pt', 'de'].map(lang => (
-                    <button
-                      type="button"
-                      key={lang}
-                      onClick={() => setActiveLangTab(lang)}
-                      style={{
-                        flex: 1,
-                        padding: '10px',
-                        borderRadius: '10px',
-                        fontSize: '13px',
-                        fontWeight: '700',
-                        textTransform: 'uppercase',
-                        backgroundColor: activeLangTab === lang ? '#1B5E3B' : 'transparent',
-                        color: activeLangTab === lang ? '#FFFFFF' : '#64748B',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      {lang === 'es' ? '🇲🇽 ES' : lang === 'en' ? '🇺🇸 EN' : lang === 'fr' ? '🇫🇷 FR' : lang === 'pt' ? '🇧🇷 PT' : '🇩🇪 DE'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Localized Fields Section */}
+              {/* Form Campos en Español */}
               <div style={{ backgroundColor: '#F8FAFC', borderRadius: '16px', padding: '20px', border: '1px solid #E2E8F0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h4 style={{ fontSize: '14px', fontWeight: '700', color: '#1B5E3B', textTransform: 'uppercase' }}>
-                  Contenido en {activeLangTab.toUpperCase()}
+                  Información del Tour (Español)
                 </h4>
 
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#334155', marginBottom: '6px' }}>
-                    Título del Tour ({activeLangTab.toUpperCase()})
+                    Título del Tour
                   </label>
                   <input
                     type="text"
-                    required={activeLangTab === 'es'}
-                    value={formData.title[activeLangTab] || ''}
+                    required
+                    value={formData.title.es || ''}
                     onChange={(e) => setFormData({
                       ...formData,
-                      title: { ...formData.title, [activeLangTab]: e.target.value }
+                      title: { es: e.target.value, en: e.target.value, fr: e.target.value, pt: e.target.value, de: e.target.value }
                     })}
                     style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none' }}
                     placeholder="Ej. Snorkel y Paseo al Arco de Los Cabos"
@@ -362,14 +310,14 @@ export default function AdminToursPage() {
 
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#334155', marginBottom: '6px' }}>
-                    Descripción Breve ({activeLangTab.toUpperCase()}) — Para la tarjeta de catálogo
+                    Descripción Breve (Para tarjeta de catálogo)
                   </label>
                   <textarea
                     rows={2}
-                    value={formData.shortDescription[activeLangTab] || ''}
+                    value={formData.shortDescription.es || ''}
                     onChange={(e) => setFormData({
                       ...formData,
-                      shortDescription: { ...formData.shortDescription, [activeLangTab]: e.target.value }
+                      shortDescription: { es: e.target.value, en: e.target.value, fr: e.target.value, pt: e.target.value, de: e.target.value }
                     })}
                     style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none' }}
                     placeholder="Resumen de 2 líneas para la tarjeta de catálogo..."
@@ -378,14 +326,14 @@ export default function AdminToursPage() {
 
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#334155', marginBottom: '6px' }}>
-                    Descripción Completa ({activeLangTab.toUpperCase()}) — Para la página de detalle
+                    Descripción Completa (Para página de detalle)
                   </label>
                   <textarea
                     rows={4}
-                    value={formData.fullDescription[activeLangTab] || ''}
+                    value={formData.fullDescription.es || ''}
                     onChange={(e) => setFormData({
                       ...formData,
-                      fullDescription: { ...formData.fullDescription, [activeLangTab]: e.target.value }
+                      fullDescription: { es: e.target.value, en: e.target.value, fr: e.target.value, pt: e.target.value, de: e.target.value }
                     })}
                     style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none' }}
                     placeholder="Descripción detallada de la experiencia, paradas y actividades..."
@@ -395,14 +343,14 @@ export default function AdminToursPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#1B5E3B', marginBottom: '6px' }}>
-                      Qué incluye (1 item por línea) ({activeLangTab.toUpperCase()})
+                      Qué incluye (1 item por línea)
                     </label>
                     <textarea
                       rows={3}
-                      value={formData.includes[activeLangTab] || ''}
+                      value={formData.includes.es || ''}
                       onChange={(e) => setFormData({
                         ...formData,
-                        includes: { ...formData.includes, [activeLangTab]: e.target.value }
+                        includes: { es: e.target.value, en: e.target.value, fr: e.target.value, pt: e.target.value, de: e.target.value }
                       })}
                       style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none', fontSize: '13px' }}
                       placeholder="Guía certificado&#10;Equipo de snorkel&#10;Barra libre"
@@ -411,21 +359,20 @@ export default function AdminToursPage() {
 
                   <div>
                     <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#E63946', marginBottom: '6px' }}>
-                      No incluye (1 item por línea) ({activeLangTab.toUpperCase()})
+                      No incluye (1 item por línea)
                     </label>
                     <textarea
                       rows={3}
-                      value={formData.excludes[activeLangTab] || ''}
+                      value={formData.excludes.es || ''}
                       onChange={(e) => setFormData({
                         ...formData,
-                        excludes: { ...formData.excludes, [activeLangTab]: e.target.value }
+                        excludes: { es: e.target.value, en: e.target.value, fr: e.target.value, pt: e.target.value, de: e.target.value }
                       })}
                       style={{ width: '100%', padding: '10px 12px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none', fontSize: '13px' }}
                       placeholder="Impuesto de muelle ($5 USD)&#10;Propinas"
                     />
                   </div>
                 </div>
-
               </div>
 
               {/* General Non-Localized Fields Section */}

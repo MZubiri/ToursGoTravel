@@ -4,8 +4,8 @@ import TourCard from './TourCard';
 import TourCardSkeleton from '@/components/ui/TourCardSkeleton';
 
 export default function PublicToursGrid({ initialTours = [], locale, dict, whatsappNumber, limit, filterDestination }) {
-  const [tours, setTours] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [tours, setTours] = useState(initialTours);
+  const [isLoading, setIsLoading] = useState(initialTours.length === 0);
 
   const fetchFreshTours = useCallback(async () => {
     try {

@@ -22,7 +22,7 @@ export function middleware(request) {
   if (pathnameHasLocale) return;
 
   request.nextUrl.pathname = `/${defaultLocale}${pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  return NextResponse.rewrite(request.nextUrl);
 }
 
 export const config = {

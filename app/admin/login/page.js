@@ -121,7 +121,7 @@ export default function LoginPage() {
               <input
                 type="email"
                 required
-                placeholder="admin@toursgotravel.com"
+                placeholder="tu@correo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={{
@@ -184,10 +184,6 @@ export default function LoginPage() {
             <ArrowRight size={18} />
           </button>
         </form>
-
-        <div style={{ marginTop: '24px', textAlign: 'center', fontSize: '12px', color: '#94A3B8' }}>
-          <span>Credenciales activas: <strong>admin@toursgotravel.com</strong> / <strong>admin123456</strong></span>
-        </div>
       </div>
     </div>
   );

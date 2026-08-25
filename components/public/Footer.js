@@ -39,7 +39,6 @@ export default function Footer({ locale, dict, config }) {
               <li><Link href={`/${locale}/tours`} style={{ color: '#94A3B8' }}>{dict.nav.tours}</Link></li>
               <li><Link href={`/${locale}#nosotros`} style={{ color: '#94A3B8' }}>{dict.nav.about}</Link></li>
               <li><Link href={`/${locale}#contacto`} style={{ color: '#94A3B8' }}>{dict.nav.contact}</Link></li>
-              <li><Link href={`/admin`} style={{ color: '#D4A853', fontWeight: '600' }}>Panel Admin</Link></li>
             </ul>
           </div>
 

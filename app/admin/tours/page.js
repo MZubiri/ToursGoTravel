@@ -42,7 +42,6 @@ export default function AdminToursPage() {
   const handleCreateNew = () => {
     setEditingTourId(null);
     setFormData(emptyForm);
-    setActiveLangTab('es');
     setIsModalOpen(true);
   };
 

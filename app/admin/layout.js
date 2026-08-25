@@ -45,7 +45,20 @@ export default function AdminLayout({ children }) {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F8FAFC' }}>
       <AdminSidebar />
-      <main style={{ flexGrow: 1, padding: '40px' }}>
+      <style jsx global>{`
+        .admin-main-content {
+          flex-grow: 1;
+          padding: 40px;
+          width: 100%;
+          min-width: 0;
+        }
+        @media (max-width: 767px) {
+          .admin-main-content {
+            padding: 80px 16px 40px 16px;
+          }
+        }
+      `}</style>
+      <main className="admin-main-content">
         {children}
       </main>
     </div>

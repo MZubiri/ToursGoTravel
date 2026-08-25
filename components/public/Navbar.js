@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Menu, X, MessageCircle } from 'lucide-react';
 import { getWhatsAppLink, trackWhatsAppClick } from '@/lib/whatsapp';
 
 export default function Navbar({ locale, dict, config }) {

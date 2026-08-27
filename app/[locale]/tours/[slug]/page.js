@@ -3,6 +3,7 @@ import { getTourBySlug, getGeneralConfig } from '@/lib/firestore';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, Users, Star, CheckCircle, XCircle, MessageCircle, MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
+import TourGallery from '@/components/public/TourGallery';
 import { getWhatsAppLink } from '@/lib/whatsapp';
 
 // Forzar renderizado dinámico (SSR)
@@ -70,32 +71,8 @@ export default async function TourDetailPage({ params }) {
           </div>
         </div>
 
-        {/* Main Gallery */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '16px',
-            borderRadius: '24px',
-            overflow: 'hidden',
-            marginBottom: '48px',
-          }}
-        >
-          <div style={{ position: 'relative', height: '420px', gridColumn: 'span 2' }} className="gallery-main">
-            <Image
-              src={tour.images[0] || "/images/hero.jpg"}
-              alt={title}
-              fill
-              priority
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-          {tour.images.slice(1, 3).map((img, i) => (
-            <div key={i} style={{ position: 'relative', height: '200px' }} className="gallery-thumb">
-              <Image src={img} alt={`${title} ${i+2}`} fill style={{ objectFit: 'cover' }} />
-            </div>
-          ))}
-        </div>
+        {/* Main Gallery (5 Photos on PC Grid / Carousel on Mobile / No Crop) */}
+        <TourGallery images={tour.images || []} title={title} />
 
         {/* Content & Sidebar Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 380px', gap: '48px', alignItems: 'start' }} className="detail-layout">

@@ -23,7 +23,7 @@ export default function AdminToursPage() {
   const emptyForm = {
     destination: 'cabos',
     duration: '4 horas',
-    maxCapacity: 12,
+    maxCapacity: 1,
     priceAdult: 1500,
     priceChild: 950,
     rating: 5.0,
@@ -50,7 +50,7 @@ export default function AdminToursPage() {
     setFormData({
       destination: tour.destination || 'cabos',
       duration: tour.duration || '4 horas',
-      maxCapacity: tour.maxCapacity || 12,
+      maxCapacity: tour.maxCapacity || 1,
       priceAdult: tour.priceAdult || 1500,
       priceChild: tour.priceChild || 950,
       rating: tour.rating || 5.0,
@@ -108,7 +108,7 @@ export default function AdminToursPage() {
       destination: formData.destination,
       status: formData.status,
       duration: formData.duration,
-      maxCapacity: Number(formData.maxCapacity),
+      maxCapacity: Number(formData.maxCapacity) || 1,
       priceAdult: Number(formData.priceAdult),
       priceChild: Number(formData.priceChild),
       rating: Number(formData.rating),
@@ -194,7 +194,7 @@ export default function AdminToursPage() {
                 <th style={{ padding: '14px 12px' }}>Tour</th>
                 <th style={{ padding: '14px 12px' }}>Destino</th>
                 <th style={{ padding: '14px 12px' }}>Precios (Adulto/Niño)</th>
-                <th style={{ padding: '14px 12px' }}>Duración & Capacidad</th>
+                <th style={{ padding: '14px 12px' }}>Duración</th>
                 <th style={{ padding: '14px 12px' }}>Estado</th>
                 <th style={{ padding: '14px 12px', textAlign: 'right' }}>Acciones</th>
               </tr>
@@ -217,7 +217,6 @@ export default function AdminToursPage() {
                   </td>
                   <td style={{ padding: '16px 12px', color: '#475569', fontSize: '13px' }}>
                     <div>⏱ {t.duration}</div>
-                    <div>👥 Max {t.maxCapacity} paxs</div>
                   </td>
                   <td style={{ padding: '16px 12px' }}>
                     <button
@@ -404,17 +403,7 @@ export default function AdminToursPage() {
                   />
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#334155', marginBottom: '6px' }}>
-                    Capacidad Máxima (Paxs)
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.maxCapacity}
-                    onChange={(e) => setFormData({ ...formData, maxCapacity: e.target.value })}
-                    style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '1px solid #CBD5E1', outline: 'none' }}
-                  />
-                </div>
+
 
                 <div>
                   <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#334155', marginBottom: '6px' }}>

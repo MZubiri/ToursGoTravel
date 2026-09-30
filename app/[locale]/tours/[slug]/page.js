@@ -64,10 +64,6 @@ export default async function TourDetailPage({ params }) {
               <Clock size={18} color="#1B5E3B" />
               <span>{tour.duration}</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontWeight: '600' }}>
-              <Users size={18} color="#1B5E3B" />
-              <span>Hasta {tour.maxCapacity} personas</span>
-            </div>
           </div>
         </div>
 

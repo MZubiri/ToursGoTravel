@@ -38,10 +38,10 @@ export default function Navbar({ locale, dict, config }) {
         right: 0,
         zIndex: 1000,
         transition: 'all 0.3s ease',
-        backgroundColor: scrolled ? '#FFFFFF' : 'rgba(15, 23, 42, 0.45)',
+        backgroundColor: scrolled ? '#FFFFFF' : '#1b2038',
         backdropFilter: 'blur(12px)',
         boxShadow: scrolled ? '0 4px 20px rgba(0, 0, 0, 0.08)' : 'none',
-        borderBottom: scrolled ? '1px solid #E2E8F0' : '1px solid rgba(255, 255, 255, 0.15)',
+        borderBottom: scrolled ? '1px solid #E2E8F0' : '1px solid rgba(255, 255, 255, 0.1)',
         padding: scrolled ? '12px 0' : '18px 0',
       }}
     >
@@ -51,8 +51,8 @@ export default function Navbar({ locale, dict, config }) {
           <div style={{ position: 'relative', width: '48px', height: '48px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #D4A853', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
             <Image src={config.logo || "/images/logo.jpg"} alt={config.companyName} fill style={{ objectFit: 'cover' }} priority />
           </div>
-          <span style={{ fontSize: '24px', fontWeight: '800', color: scrolled ? '#1B5E3B' : '#FFFFFF', letterSpacing: '-0.5px' }}>
-            Go<span style={{ color: '#D4A853' }}>Travel</span>
+          <span style={{ fontSize: '24px', fontWeight: '800', color: scrolled ? '#1b2038' : '#FFFFFF', letterSpacing: '-0.5px' }}>
+            Tours <span style={{ color: '#D4A853' }}>GoTravel</span>
           </span>
         </Link>
 
@@ -65,7 +65,7 @@ export default function Navbar({ locale, dict, config }) {
               style={{
                 fontSize: '15px',
                 fontWeight: '600',
-                color: scrolled ? '#334155' : '#FFFFFF',
+                color: scrolled ? '#1b2038' : '#FFFFFF',
                 transition: 'color 0.2s ease',
               }}
             >
@@ -104,7 +104,7 @@ export default function Navbar({ locale, dict, config }) {
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="mobile-toggle"
-          style={{ color: scrolled ? '#0F172A' : '#FFFFFF', background: 'none', border: 'none', padding: '6px' }}
+          style={{ color: scrolled ? '#1b2038' : '#FFFFFF', background: 'none', border: 'none', padding: '6px' }}
         >
           {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -114,17 +114,17 @@ export default function Navbar({ locale, dict, config }) {
       {mobileMenuOpen && (
         <div
           style={{
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#1b2038',
             position: 'absolute',
             top: '100%',
             left: 0,
             right: 0,
             padding: '24px',
-            boxShadow: '0 20px 30px rgba(0,0,0,0.15)',
+            boxShadow: '0 20px 30px rgba(0,0,0,0.3)',
             display: 'flex',
             flexDirection: 'column',
             gap: '18px',
-            borderTop: '1px solid #E2E8F0',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
           }}
         >
           {navLinks.map((link, idx) => (
@@ -132,12 +132,12 @@ export default function Navbar({ locale, dict, config }) {
               key={idx}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              style={{ fontSize: '18px', fontWeight: '600', color: '#0F172A' }}
+              style={{ fontSize: '18px', fontWeight: '600', color: '#FFFFFF' }}
             >
               {link.label}
             </Link>
           ))}
-          <div style={{ height: '1px', backgroundColor: '#E2E8F0', margin: '8px 0' }} />
+          <div style={{ height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.15)', margin: '8px 0' }} />
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <a
               href={getWhatsAppLink({ phone: config.whatsappNumber })}

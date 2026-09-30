@@ -117,11 +117,7 @@ export default function TourCard({ tour, locale, dict, whatsappNumber }) {
             <Clock size={16} color="#1B5E3B" />
             <span>{tour.duration}</span>
           </div>
-          <div style={{ width: '1px', height: '14px', backgroundColor: '#CBD5E1' }} />
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Users size={16} color="#1B5E3B" />
-            <span>Hasta {tour.maxCapacity} paxs</span>
-          </div>
+
         </div>
 
         {/* Price & Action Footer */}
